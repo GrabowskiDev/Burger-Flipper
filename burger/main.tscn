@@ -1,9 +1,42 @@
-[gd_scene load_steps=2 format=3 uid="uid://cdepil23k3onc"]
+[gd_scene load_steps=6 format=3 uid="uid://cdepil23k3onc"]
 
-[ext_resource type="Texture2D" uid="uid://42ou5u4dlu1f" path="res://icon.svg" id="1_ig7tw"]
+[ext_resource type="Script" uid="uid://b28ert0eb6q3j" path="res://character_body_3d.gd" id="1_ig7tw"]
 
-[node name="main" type="Node"]
+[sub_resource type="BoxShape3D" id="BoxShape3D_7dm0k"]
+size = Vector3(20, 1, 20)
 
-[node name="GDExample" type="GDExample" parent="."]
-texture = ExtResource("1_ig7tw")
-centered = false
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_0xm2m"]
+albedo_color = Color(0, 0.156863, 1, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_h2yge"]
+material = SubResource("StandardMaterial3D_0xm2m")
+size = Vector3(20, 1, 20)
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ig7tw"]
+
+[node name="Main" type="Node"]
+
+[node name="Ground" type="StaticBody3D" parent="."]
+axis_lock_linear_x = true
+axis_lock_linear_y = true
+axis_lock_linear_z = true
+axis_lock_angular_x = true
+axis_lock_angular_y = true
+axis_lock_angular_z = true
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ground"]
+shape = SubResource("BoxShape3D_7dm0k")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Ground"]
+mesh = SubResource("BoxMesh_h2yge")
+
+[node name="Player" type="CharacterBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.41436, 0)
+script = ExtResource("1_ig7tw")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Player"]
+shape = SubResource("CapsuleShape3D_ig7tw")
+
+[node name="Head" type="Node3D" parent="Player"]
+
+[node name="Camera3D" type="Camera3D" parent="Player/Head"]
