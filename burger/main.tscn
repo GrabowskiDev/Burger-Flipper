@@ -1,6 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://cdepil23k3onc"]
-
-[ext_resource type="Script" uid="uid://b28ert0eb6q3j" path="res://character_body_3d.gd" id="1_ig7tw"]
+[gd_scene load_steps=5 format=3 uid="uid://cdepil23k3onc"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_7dm0k"]
 size = Vector3(20, 1, 20)
@@ -30,13 +28,15 @@ shape = SubResource("BoxShape3D_7dm0k")
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Ground"]
 mesh = SubResource("BoxMesh_h2yge")
 
-[node name="Player" type="CharacterBody3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.41436, 0)
-script = ExtResource("1_ig7tw")
+[node name="Player" type="Player" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 6.24391, 0)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Player"]
 shape = SubResource("CapsuleShape3D_ig7tw")
+metadata/_edit_lock_ = true
 
 [node name="Head" type="Node3D" parent="Player"]
+metadata/_edit_lock_ = true
 
 [node name="Camera3D" type="Camera3D" parent="Player/Head"]
+metadata/_edit_lock_ = true
