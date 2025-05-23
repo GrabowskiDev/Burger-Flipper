@@ -15,3 +15,16 @@ or in case you already cloned the repo
 ```
 git submodule update --init --recursive
 ```
+
+## Setting up the development
+After cloning the project, you need to build the C++ bindings!
+First, run a command
+```
+godot --dump-extension-api
+```
+That'll create a `extension_api.json` file. After that run
+```
+cd godot-cpp
+scons platform=<platform> custom_api_file=<PATH_TO_EXTENSION_API_FILE>
+cd ..
+```
