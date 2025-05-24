@@ -29,13 +29,15 @@ shape = SubResource("BoxShape3D_7dm0k")
 mesh = SubResource("BoxMesh_h2yge")
 
 [node name="Player" type="Player" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 6.24391, 0)
+p_head = NodePath("Head")
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.786991, 11.8362, 0.325891)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Player"]
 shape = SubResource("CapsuleShape3D_ig7tw")
 metadata/_edit_lock_ = true
 
 [node name="Head" type="Node3D" parent="Player"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
 metadata/_edit_lock_ = true
 
 [node name="Camera3D" type="Camera3D" parent="Player/Head"]
