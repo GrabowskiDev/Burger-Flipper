@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://cdepil23k3onc"]
+[gd_scene load_steps=6 format=3 uid="uid://cdepil23k3onc"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_7dm0k"]
 size = Vector3(20, 1, 20)
@@ -11,6 +11,11 @@ material = SubResource("StandardMaterial3D_0xm2m")
 size = Vector3(20, 1, 20)
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ig7tw"]
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_7dm0k"]
+top_radius = 0.2
+bottom_radius = 0.2
+height = 0.1
 
 [node name="Main" type="Node"]
 
@@ -30,7 +35,7 @@ mesh = SubResource("BoxMesh_h2yge")
 
 [node name="Player" type="Player" parent="."]
 p_head = NodePath("Head")
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.786991, 11.8362, 0.325891)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.786991, 3.71201, 0.325891)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Player"]
 shape = SubResource("CapsuleShape3D_ig7tw")
@@ -42,3 +47,8 @@ metadata/_edit_lock_ = true
 
 [node name="Camera3D" type="Camera3D" parent="Player/Head"]
 metadata/_edit_lock_ = true
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Player/Head/Camera3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.306737, -0.323662, -0.751116)
+mesh = SubResource("CylinderMesh_7dm0k")
+skeleton = NodePath("../../..")

@@ -20,7 +20,7 @@ void Player::_bind_methods() {
     ClassDB::bind_method(D_METHOD("get_head"), &Player::get_head);
     ClassDB::bind_method(D_METHOD("set_head", "p_head"), &Player::set_head);
 
-    ADD_PROPERTY(PropertyInfo(Variant::NODE_PATH, "p_head"), "set_head", "get_head");
+    ADD_PROPERTY(PropertyInfo(Variant::NODE_PATH, "head"), "set_head", "get_head");
 
 //    ClassDB::bind_method(D_METHOD("_unhandled_input", "event"), &Player::_unhandled_input);
 }
