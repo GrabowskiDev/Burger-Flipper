@@ -1,6 +1,7 @@
 #include "player.h"
 #include <godot_cpp/core/class_db.hpp>
 #include <godot_cpp/classes/input.hpp>
+#include <godot_cpp/classes/resource_loader.hpp>
 #include <godot_cpp/classes/input_event_mouse_motion.hpp>
 
 
@@ -21,6 +22,20 @@ void Player::_bind_methods() {
     ClassDB::bind_method(D_METHOD("set_head", "p_head"), &Player::set_head);
 
     ADD_PROPERTY(PropertyInfo(Variant::NODE_PATH, "head"), "set_head", "get_head");
+
+    ClassDB::bind_method(D_METHOD("get_hand"), &Player::get_hand);
+    ClassDB::bind_method(D_METHOD("set_hand", "p_hand"), &Player::set_hand);
+
+    ADD_PROPERTY(PropertyInfo(Variant::NODE_PATH, "hand"), "set_hand", "get_hand");
+
+
+//    ClassDB::bind_method(D_METHOD("get_bottom_bun"), &Player::get_bottom_bun);
+//    ClassDB::bind_method(D_METHOD("set_bottom_bun", "p_bottom_bun"), &Player::set_bottom_bun);
+//
+//    ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "bottom_bun"), "set_bottom_bun", "get_bottom_bun");
+
+
+
 
 //    ClassDB::bind_method(D_METHOD("_unhandled_input", "event"), &Player::_unhandled_input);
 }
@@ -53,6 +68,13 @@ void Player::_process(double delta) {
 
 void Player::_ready() {
     Input::get_singleton()->set_mouse_mode(Input::MOUSE_MODE_CAPTURED);
+    Node3D *node_hand = get_node<Node3D>(hand);
+    Ref<PackedScene> bun_scene = ResourceLoader::get_singleton()->load("res://assets/burger_parts/burger_bottom.fbx");
+    if (bun_scene.is_valid()) {
+        Node3D *bun_instance = Object::cast_to<Node3D>(bun_scene.instantiate());
+        this->add_child(bun_instance);
+    }
+//    Node3D bottom_bun = static_cast<Node3D>(ResourceLoader::get_singleton()->load("res://assets/burger_parts/burger_bottom.fbx"));
 }
 
 Vector3 Player::get_movement_vector() {
@@ -71,7 +93,7 @@ void Player::_unhandled_input(const Ref<InputEvent> &event) {
     if (mouse_motion.is_valid()) {
         Vector2 rel = mouse_motion->get_relative();
         Node3D *node_head = get_node<Node3D>(head);
-//        node_head->set_rotation_edit_mode(Node3D::ROTATION_EDIT_MODE_BASIS);
+        Node3D *node_hand = get_node<Node3D>(hand);
 
         // Obrót gracza w osi Y (lewo/prawo)
         this->rotate_y(-rel.x * 0.005);
@@ -80,7 +102,7 @@ void Player::_unhandled_input(const Ref<InputEvent> &event) {
         head_pitch = Math::clamp(head_pitch - rel.y * 0.005, -Math_PI/2, Math_PI/2);
         node_head->set_rotation(Vector3(head_pitch, 0, 0));
 
-        print_line(node_head->get_rotation());
+//        print_line(node_head->get_rotation());
     }
 }
 
@@ -96,6 +118,13 @@ void Player::set_head(NodePath p_head) {
     head = p_head;
 }
 
+void Player::set_hand(NodePath p_hand) {
+    hand = p_hand;
+}
+
+//void Player::set_bottom_bun(Ref<Object> p_bottom_bun) {
+//    bottom_bun = p_bottom_bun;
+//}
 double Player::get_speed() const {
     return speed;
 }
@@ -107,3 +136,11 @@ double Player::get_jump_velocity() const {
 NodePath Player::get_head() const {
     return head;
 }
+
+NodePath Player::get_hand() const {
+    return hand;
+}
+
+//Ref<Object> Player::get_bottom_bun() const {
+//    return bottom_bun;
+//}

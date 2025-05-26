@@ -16,8 +16,12 @@ private:
     double speed;
     double jump_velocity;
     NodePath head;
+    NodePath hand;
     Vector3 get_movement_vector();
     double head_pitch = 0.0;
+
+//    Ref<Object> bottom_bun;
+
 
 protected:
     static void _bind_methods();
@@ -29,6 +33,9 @@ public:
     void set_head(NodePath p_head);
     NodePath get_head() const;
 
+    void set_hand(NodePath p_hand);
+    NodePath get_hand() const;
+
     void set_speed(const double p_speed);
     double get_speed() const;
 
@@ -38,6 +45,10 @@ public:
     void _process(double delta) override;
     void _ready() override;
     void _unhandled_input(const godot::Ref<godot::InputEvent> &event) override;
+
+
+//    void set_bottom_bun(Ref<Object> p_bottom_bun);
+//    Ref<Object> get_bottom_bun() const;
 
 };
 
