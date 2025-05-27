@@ -3,6 +3,7 @@
 #include <godot_cpp/classes/input.hpp>
 #include <godot_cpp/classes/resource_loader.hpp>
 #include <godot_cpp/classes/input_event_mouse_motion.hpp>
+#include <godot_cpp/classes/packed_scene.hpp>
 
 
 using namespace godot;
@@ -69,11 +70,13 @@ void Player::_process(double delta) {
 void Player::_ready() {
     Input::get_singleton()->set_mouse_mode(Input::MOUSE_MODE_CAPTURED);
     Node3D *node_hand = get_node<Node3D>(hand);
-    Ref<PackedScene> bun_scene = ResourceLoader::get_singleton()->load("res://assets/burger_parts/burger_bottom.fbx");
-    if (bun_scene.is_valid()) {
-        Node3D *bun_instance = Object::cast_to<Node3D>(bun_scene.instantiate());
-        this->add_child(bun_instance);
+    Ref<PackedScene> scene = ResourceLoader::get_singleton()->load("res://assets/burger_parts/burger_bottom.fbx", "PackedScene");
+    if (scene.is_valid()) {
+        Node *node = scene->instantiate();
+        node_hand->add_child(node);
+        current_object = node;
     }
+
 //    Node3D bottom_bun = static_cast<Node3D>(ResourceLoader::get_singleton()->load("res://assets/burger_parts/burger_bottom.fbx"));
 }
 
@@ -102,6 +105,11 @@ void Player::_unhandled_input(const Ref<InputEvent> &event) {
         head_pitch = Math::clamp(head_pitch - rel.y * 0.005, -Math_PI/2, Math_PI/2);
         node_head->set_rotation(Vector3(head_pitch, 0, 0));
 
+        print_line(current_object);
+        if (current_object) {
+            current_object->queue_free();
+            current_object = nullptr;
+        }
 //        print_line(node_head->get_rotation());
     }
 }

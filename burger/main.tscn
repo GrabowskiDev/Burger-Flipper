@@ -58,8 +58,6 @@ metadata/_edit_lock_ = true
 [node name="Hand" type="Node3D" parent="Player/Head/Camera3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.306737, -0.323662, -0.901084)
 
-[node name="burger_bottom" parent="Player/Head/Camera3D/Hand" instance=ExtResource("1_ig7tw")]
-
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, -0.643001, 0.765865, 0, -0.765865, -0.643001, 0.088521, 13.7684, -24.9913)
 

@@ -17,6 +17,7 @@ private:
     double jump_velocity;
     NodePath head;
     NodePath hand;
+    Node *current_object;
     Vector3 get_movement_vector();
     double head_pitch = 0.0;
 
