@@ -1,27 +1,33 @@
-[gd_scene load_steps=10 format=3 uid="uid://cdepil23k3onc"]
+[gd_scene load_steps=12 format=3 uid="uid://cdepil23k3onc"]
 
-[ext_resource type="Script" uid="uid://cfvsj1otqmf4d" path="res://head.gd" id="1_h2yge"]
-[ext_resource type="PackedScene" uid="uid://bmofb1v0rq0fi" path="res://assets/burger_parts/burger_bottom.fbx" id="1_ig7tw"]
+[ext_resource type="PackedScene" uid="uid://cgvu2nbeoyp7r" path="res://player.tscn" id="1_0xm2m"]
+[ext_resource type="Texture2D" uid="uid://m3hb1l4xfeav" path="res://assets/textures/wood_floor_diff_1k.png" id="1_lquwl"]
 [ext_resource type="PackedScene" uid="uid://ogmfyka1p3op" path="res://assets/burger_parts/burger_top.fbx" id="2_0xm2m"]
+[ext_resource type="Texture2D" uid="uid://bvey7gm218jol" path="res://assets/textures/wood_floor_nor_gl_1k.png" id="2_7mycd"]
+[ext_resource type="Texture2D" uid="uid://dtk3yejccybar" path="res://assets/textures/wood_floor_rough_1k.png" id="3_272bh"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_7dm0k"]
 size = Vector3(20, 1, 20)
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_0xm2m"]
-albedo_color = Color(0.670095, 0, 0.264177, 1)
-metallic_specular = 0.85
-roughness = 0.8
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_7mycd"]
+albedo_texture = ExtResource("1_lquwl")
+roughness_texture = ExtResource("3_272bh")
+normal_enabled = true
+normal_texture = ExtResource("2_7mycd")
+uv1_scale = Vector3(4, 4, 4)
 
-[sub_resource type="BoxMesh" id="BoxMesh_h2yge"]
-material = SubResource("StandardMaterial3D_0xm2m")
-size = Vector3(20, 1, 20)
-
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ig7tw"]
+[sub_resource type="PlaneMesh" id="PlaneMesh_0xm2m"]
+material = SubResource("StandardMaterial3D_7mycd")
+size = Vector2(20, 20)
+center_offset = Vector3(0, 0.5, 0)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_h2yge"]
 size = Vector3(2, 1, 1)
 
 [sub_resource type="SphereMesh" id="SphereMesh_1bvp3"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_h2yge"]
+radius = 2.0
 
 [node name="Main" type="Node"]
 
@@ -37,40 +43,13 @@ axis_lock_angular_z = true
 shape = SubResource("BoxShape3D_7dm0k")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Ground"]
-mesh = SubResource("BoxMesh_h2yge")
+mesh = SubResource("PlaneMesh_0xm2m")
 
-[node name="Player" type="Player" parent="."]
-head = NodePath("Head")
-hand = NodePath("Head/Camera3D/Hand")
+[node name="Player" parent="." instance=ExtResource("1_0xm2m")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.786991, 3.71201, 0.325891)
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Player"]
-shape = SubResource("CapsuleShape3D_ig7tw")
-metadata/_edit_lock_ = true
-
-[node name="Head" type="Node3D" parent="Player"]
-script = ExtResource("1_h2yge")
-metadata/_edit_lock_ = true
-
-[node name="Camera3D" type="Camera3D" parent="Player/Head"]
-metadata/_edit_lock_ = true
-
-[node name="Hand" type="Node3D" parent="Player/Head/Camera3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.306737, -0.323662, -0.901084)
-
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, -0.643001, 0.765865, 0, -0.765865, -0.643001, 0.088521, 13.7684, -24.9913)
-
-[node name="Node3D" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.49929, 2.62177, 0.464305)
-
-[node name="burger_bottom" parent="Node3D" instance=ExtResource("1_ig7tw")]
-
-[node name="burger_top" parent="Node3D" instance=ExtResource("2_0xm2m")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00124264, 0.4, 7.51019e-06)
-
-[node name="Cheese" parent="Node3D" instance=ExtResource("2_0xm2m")]
-transform = Transform3D(-1, -8.74228e-08, 0, 8.74228e-08, -1, 0, 0, 0, 1, 0, 0.2, 0)
+transform = Transform3D(1, 0, 0, 0, -0.643001, 0.765865, 0, -0.765865, -0.643001, -12.745, 12.7747, 0.714884)
 
 [node name="StaticBody3D" type="StaticBody3D" parent="."]
 
@@ -83,4 +62,11 @@ debug_color = Color(0.47589, 0.439406, 1, 0.42)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.21522, 0)
 mesh = SubResource("SphereMesh_1bvp3")
 
+[node name="Area3D" type="Area3D" parent="StaticBody3D"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D/Area3D"]
+shape = SubResource("SphereShape3D_h2yge")
+
 [node name="ItemBox" type="ItemBox" parent="."]
+exported_scene = ExtResource("2_0xm2m")
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.98002, 0, 0)

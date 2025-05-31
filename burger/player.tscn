@@ -1,0 +1,20 @@
+[gd_scene load_steps=2 format=3 uid="uid://cgvu2nbeoyp7r"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ig7tw"]
+
+[node name="Player" type="Player"]
+head = NodePath("Head")
+hand = NodePath("Head/Camera3D/Hand")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("CapsuleShape3D_ig7tw")
+metadata/_edit_lock_ = true
+
+[node name="Head" type="Node3D" parent="."]
+metadata/_edit_lock_ = true
+
+[node name="Camera3D" type="Camera3D" parent="Head"]
+metadata/_edit_lock_ = true
+
+[node name="Hand" type="Node3D" parent="Head/Camera3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.306737, -0.323662, -0.901084)
