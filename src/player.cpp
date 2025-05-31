@@ -60,22 +60,28 @@ void Player::_ready() {
     Input::get_singleton()->set_mouse_mode(Input::MOUSE_MODE_CAPTURED);
 //    Ref<PackedScene> scene = ResourceLoader::get_singleton()->load("res://assets/burger_parts/burger_bottom.fbx", "PackedScene");
 //    add_to_hand(scene);
+    current_object = nullptr;
 }
 
 void Player::add_to_hand(Ref<PackedScene> scene){
     Node3D *node_hand = get_node<Node3D>(hand);
+//    print_line("pre instantiating a scene");
     if (scene.is_valid() && current_object == nullptr) {
+//        print_line("instantiating a scene");
         Node *node = scene->instantiate();
         node_hand->add_child(node);
         current_object = node;
     }
 }
 
+void Player::add_to_hand_node(godot::Node *node) {
+    Node3D *node_hand = get_node<Node3D>(hand);
+    node_hand->add_child(node);
+    current_object = node;
+}
+
 void Player::remove_from_hand() {
-    if (current_object) {
-        current_object->queue_free();
-        current_object = nullptr;
-    }
+    current_object = nullptr;
 }
 
 Vector3 Player::get_movement_vector() {
@@ -102,7 +108,6 @@ void Player::_unhandled_input(const Ref<InputEvent> &event) {
         // Obrót głowy/kamery w osi X (góra/dół)
         head_pitch = Math::clamp(head_pitch - rel.y * 0.005, -Math_PI/2, Math_PI/2);
         node_head->set_rotation(Vector3(head_pitch, 0, 0));
-        remove_from_hand();
 
 //        print_line(current_object);
 //        if (current_object) {
@@ -146,6 +151,14 @@ NodePath Player::get_head() const {
 
 NodePath Player::get_hand() const {
     return hand;
+}
+
+void Player::set_current_object(godot::Node *p_current_object) {
+    current_object = p_current_object;
+}
+
+Node *Player::get_current_object() {
+    return current_object;
 }
 
 //Ref<Object> Player::get_bottom_bun() const {

@@ -1,11 +1,13 @@
-[gd_scene load_steps=11 format=3 uid="uid://cdepil23k3onc"]
+[gd_scene load_steps=14 format=3 uid="uid://cdepil23k3onc"]
 
 [ext_resource type="PackedScene" uid="uid://cgvu2nbeoyp7r" path="res://player.tscn" id="1_0xm2m"]
 [ext_resource type="Texture2D" uid="uid://m3hb1l4xfeav" path="res://assets/textures/wood_floor_diff_1k.png" id="1_lquwl"]
 [ext_resource type="Texture2D" uid="uid://bvey7gm218jol" path="res://assets/textures/wood_floor_nor_gl_1k.png" id="2_7mycd"]
 [ext_resource type="Texture2D" uid="uid://dtk3yejccybar" path="res://assets/textures/wood_floor_rough_1k.png" id="3_272bh"]
 [ext_resource type="PackedScene" uid="uid://dyy1jiyal552d" path="res://assets/burger_parts/burger_bottom.tscn" id="6_7mycd"]
+[ext_resource type="PackedScene" uid="uid://mewgyriwgaql" path="res://assets/burger_parts/meat.tscn" id="7_5vw27"]
 [ext_resource type="PackedScene" uid="uid://bmpp28cm2pncb" path="res://item_counter.tscn" id="7_272bh"]
+[ext_resource type="PackedScene" uid="uid://dgrbtyalf3nf1" path="res://assets/burger_parts/burger_top.tscn" id="7_kek77"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_7dm0k"]
 size = Vector3(20, 1, 20)
@@ -24,6 +26,9 @@ center_offset = Vector3(0, 0.5, 0)
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_7mycd"]
 radius = 1.5
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_272bh"]
+radius = 2.0
 
 [node name="Main" type="Node"]
 
@@ -52,14 +57,62 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.98002, 0, 0)
 
 [node name="ItemCounter" parent="." instance=ExtResource("7_272bh")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.11386, 1, 8.12562)
+collision_mask = 0
 
 [node name="Burger Bottom" parent="ItemCounter" instance=ExtResource("6_7mycd")]
+name = ""
 transform = Transform3D(100, 0, 0, 0, 0, 20, 0, -100, 0, 0, 0.523333, 0)
 
 [node name="ItemBox" type="ItemBox" parent="ItemCounter"]
 item_scene = ExtResource("6_7mycd")
-collision_layer = 3
-collision_mask = 3
+collision_layer = 0
+collision_mask = 2
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="ItemCounter/ItemBox"]
 shape = SubResource("SphereShape3D_7mycd")
+
+[node name="ItemCounter3" parent="." instance=ExtResource("7_272bh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.82196, 1, 8.12562)
+collision_mask = 0
+
+[node name="ItemBox" type="ItemBox" parent="ItemCounter3"]
+item_scene = ExtResource("7_kek77")
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ItemCounter3/ItemBox"]
+shape = SubResource("SphereShape3D_7mycd")
+
+[node name="Burger Top" parent="ItemCounter3" instance=ExtResource("7_kek77")]
+transform = Transform3D(100, 0, 0, 0, 0, 20, 0, -100, 0, 0, 0.65, 0)
+
+[node name="ItemCounter2" parent="." instance=ExtResource("7_272bh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.98594, 1, 8.12562)
+collision_mask = 0
+
+[node name="ItemBox" type="ItemBox" parent="ItemCounter2"]
+item_scene = ExtResource("7_5vw27")
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ItemCounter2/ItemBox"]
+shape = SubResource("SphereShape3D_7mycd")
+
+[node name="Meat" parent="ItemCounter2" instance=ExtResource("7_5vw27")]
+transform = Transform3D(100, 0, 0, 0, 0, 20, 0, -100, 0, 0, 0.6, 0)
+
+[node name="Burger" parent="." instance=ExtResource("7_272bh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.37583, 1, -8.50377)
+collision_mask = 0
+
+[node name="Burger" type="Burger" parent="Burger"]
+interact_area = NodePath("Area3D")
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+
+[node name="Area3D" type="Area3D" parent="Burger/Burger"]
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Burger/Burger/Area3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.477997, 0)
+shape = SubResource("SphereShape3D_272bh")

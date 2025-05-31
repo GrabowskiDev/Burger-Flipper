@@ -41,7 +41,11 @@ public:
     void set_speed(const double p_speed);
     double get_speed() const;
 
+    void set_current_object(Node *p_current_object);
+    Node* get_current_object();
+
     void add_to_hand(Ref<PackedScene> scene);
+    void add_to_hand_node(Node *node);
     void remove_from_hand();
     void set_jump_velocity(const double p_jump_velocity);
     double get_jump_velocity() const;

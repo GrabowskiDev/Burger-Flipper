@@ -42,7 +42,9 @@ _surfaces = [{
 blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_6n03i")
 
-[node name="Burger Bottom" type="MeshInstance3D"]
-transform = Transform3D(100, 0, 0, 0, 0, 20, 0, -100, 0, 0, 0, 0)
+[node name="Burger Bottom" type="BurgerPart"]
+height = 0.12
+name = "bottom_bun"
+transform = Transform3D(100, 0, 0, 0, -4.37114e-06, 20, 0, -100, -8.74228e-07, 0, 0, 0)
 mesh = SubResource("ArrayMesh_2dy5c")
 skeleton = NodePath("")

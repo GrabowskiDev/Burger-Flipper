@@ -16,7 +16,7 @@ namespace godot {
 
     protected:
         static void _bind_methods();
-        void _on_body_entered(Node *body);
+        void _on_body_entered_item_box(Node *body);
 
     public:
         ItemBox();
