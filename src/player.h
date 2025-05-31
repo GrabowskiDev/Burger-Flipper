@@ -5,6 +5,7 @@
 #include <godot_cpp/classes/node3d.hpp>
 #include <godot_cpp/classes/input_event.hpp>
 #include <godot_cpp/core/class_db.hpp>
+#include <godot_cpp/classes/packed_scene.hpp>
 
 namespace godot {
 
@@ -40,6 +41,8 @@ public:
     void set_speed(const double p_speed);
     double get_speed() const;
 
+    void add_to_hand(Ref<PackedScene> scene);
+    void remove_from_hand();
     void set_jump_velocity(const double p_jump_velocity);
     double get_jump_velocity() const;
 

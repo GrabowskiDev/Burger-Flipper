@@ -28,17 +28,6 @@ void Player::_bind_methods() {
     ClassDB::bind_method(D_METHOD("set_hand", "p_hand"), &Player::set_hand);
 
     ADD_PROPERTY(PropertyInfo(Variant::NODE_PATH, "hand"), "set_hand", "get_hand");
-
-
-//    ClassDB::bind_method(D_METHOD("get_bottom_bun"), &Player::get_bottom_bun);
-//    ClassDB::bind_method(D_METHOD("set_bottom_bun", "p_bottom_bun"), &Player::set_bottom_bun);
-//
-//    ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "bottom_bun"), "set_bottom_bun", "get_bottom_bun");
-
-
-
-
-//    ClassDB::bind_method(D_METHOD("_unhandled_input", "event"), &Player::_unhandled_input);
 }
 
 Player::Player() {
@@ -69,15 +58,24 @@ void Player::_process(double delta) {
 
 void Player::_ready() {
     Input::get_singleton()->set_mouse_mode(Input::MOUSE_MODE_CAPTURED);
+//    Ref<PackedScene> scene = ResourceLoader::get_singleton()->load("res://assets/burger_parts/burger_bottom.fbx", "PackedScene");
+//    add_to_hand(scene);
+}
+
+void Player::add_to_hand(Ref<PackedScene> scene){
     Node3D *node_hand = get_node<Node3D>(hand);
-    Ref<PackedScene> scene = ResourceLoader::get_singleton()->load("res://assets/burger_parts/burger_bottom.fbx", "PackedScene");
-    if (scene.is_valid()) {
+    if (scene.is_valid() && current_object == nullptr) {
         Node *node = scene->instantiate();
         node_hand->add_child(node);
         current_object = node;
     }
+}
 
-//    Node3D bottom_bun = static_cast<Node3D>(ResourceLoader::get_singleton()->load("res://assets/burger_parts/burger_bottom.fbx"));
+void Player::remove_from_hand() {
+    if (current_object) {
+        current_object->queue_free();
+        current_object = nullptr;
+    }
 }
 
 Vector3 Player::get_movement_vector() {
@@ -104,12 +102,13 @@ void Player::_unhandled_input(const Ref<InputEvent> &event) {
         // Obrót głowy/kamery w osi X (góra/dół)
         head_pitch = Math::clamp(head_pitch - rel.y * 0.005, -Math_PI/2, Math_PI/2);
         node_head->set_rotation(Vector3(head_pitch, 0, 0));
+        remove_from_hand();
 
-        print_line(current_object);
-        if (current_object) {
-            current_object->queue_free();
-            current_object = nullptr;
-        }
+//        print_line(current_object);
+//        if (current_object) {
+//            current_object->queue_free();
+//            current_object = nullptr;
+//        }
 //        print_line(node_head->get_rotation());
     }
 }
