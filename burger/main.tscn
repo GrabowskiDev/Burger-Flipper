@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://cdepil23k3onc"]
+[gd_scene load_steps=19 format=3 uid="uid://cdepil23k3onc"]
 
 [ext_resource type="PackedScene" uid="uid://cgvu2nbeoyp7r" path="res://player.tscn" id="1_0xm2m"]
 [ext_resource type="Texture2D" uid="uid://m3hb1l4xfeav" path="res://assets/textures/wood_floor_diff_1k.png" id="1_lquwl"]
@@ -10,6 +10,18 @@
 [ext_resource type="PackedScene" uid="uid://dgrbtyalf3nf1" path="res://assets/burger_parts/burger_top.tscn" id="7_kek77"]
 [ext_resource type="PackedScene" uid="uid://77xfd7hgtwgc" path="res://assets/burger_parts/lettuce.tscn" id="8_kek77"]
 [ext_resource type="PackedScene" uid="uid://bgdpvcw71q42e" path="res://assets/burger_parts/tomato.tscn" id="9_4c57u"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_4c57u"]
+sky_top_color = Color(0.378324, 0.644502, 0.803094, 1)
+ground_bottom_color = Color(0.509712, 0.549588, 0.519687, 1)
+ground_horizon_color = Color(0.567923, 0.578037, 0.594006, 1)
+
+[sub_resource type="Sky" id="Sky_efxa6"]
+sky_material = SubResource("ProceduralSkyMaterial_4c57u")
+
+[sub_resource type="Environment" id="Environment_dg77c"]
+background_mode = 2
+sky = SubResource("Sky_efxa6")
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_7dm0k"]
 size = Vector3(20, 1, 20)
@@ -34,6 +46,15 @@ radius = 2.0
 
 [node name="Main" type="Node"]
 
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_dg77c")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="WorldEnvironment"]
+transform = Transform3D(1, 0, 0, 0, -0.715388, 0.698728, 0, -0.698728, -0.715388, -12.745, 12.7747, 0.714884)
+shadow_enabled = true
+shadow_opacity = 0.85
+directional_shadow_mode = 1
+
 [node name="Ground" type="StaticBody3D" parent="."]
 axis_lock_linear_x = true
 axis_lock_linear_y = true
@@ -50,9 +71,6 @@ mesh = SubResource("PlaneMesh_0xm2m")
 
 [node name="Player" parent="." instance=ExtResource("1_0xm2m")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.786991, 3.71201, 0.325891)
-
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, -0.643001, 0.765865, 0, -0.765865, -0.643001, -12.745, 12.7747, 0.714884)
 
 [node name="ItemCounters" type="Node" parent="."]
 
