@@ -3,6 +3,7 @@
 #include <godot_cpp/core/class_db.hpp>
 #include <godot_cpp/classes/area3d.hpp>
 #include <godot_cpp/classes/packed_scene.hpp>
+#include <godot_cpp/classes/input.hpp>
 
 using namespace godot;
 
@@ -12,10 +13,11 @@ void ItemBox::_bind_methods() {
     ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "item_scene", PROPERTY_HINT_RESOURCE_TYPE, "PackedScene"), "set_item_scene", "get_item_scene");
 
     ClassDB::bind_method(D_METHOD("_on_body_entered_item_box", "body"), &ItemBox::_on_body_entered_item_box);
+    ClassDB::bind_method(D_METHOD("_on_body_exited_item_box", "body"), &ItemBox::_on_body_exited_item_box);
 }
 
 ItemBox::ItemBox() {
-//    time_passed = 0;
+//    player_in_box = nullptr;
 }
 
 ItemBox::~ItemBox() {
@@ -24,19 +26,30 @@ ItemBox::~ItemBox() {
 
 void ItemBox::_ready() {
     this->connect("body_entered", Callable(this, "_on_body_entered_item_box"));
+    this->connect("body_exited", Callable(this, "_on_body_exited_item_box"));
+
     print_line("ready item box");
 }
 
 void ItemBox::_on_body_entered_item_box(Node *body) {
     print_line("colllll");
     if (Player *player = Object::cast_to<Player>(body)) {
-        print_line("adding");
-        player->add_to_hand(item_scene);
+        player_in_box = player;
+//        player->add_to_hand(item_scene);
+    }
+}
+
+void ItemBox::_on_body_exited_item_box(Node *body) {
+    if (Object::cast_to<Player>(body) == player_in_box) {
+        player_in_box = nullptr;
     }
 }
 
 void ItemBox::_process(double delta) {
-//    this.body_entered
+    if (player_in_box && Input::get_singleton()->is_action_just_pressed("interact")) {
+        player_in_box->add_to_hand(item_scene);
+//        player_in_box = nullptr; // zapobiega wielokrotnemu podniesieniu
+    }
 }
 
 

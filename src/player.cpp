@@ -75,8 +75,11 @@ void Player::add_to_hand(Ref<PackedScene> scene){
 }
 
 void Player::add_to_hand_node(godot::Node *node) {
+//    if (current_object) {return;}
     Node3D *node_hand = get_node<Node3D>(hand);
-    node_hand->add_child(node);
+    if (node->get_parent() != node_hand) {
+        node_hand->add_child(node);
+    }
     current_object = node;
 }
 

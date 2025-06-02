@@ -2,7 +2,7 @@
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ig7tw"]
 
-[node name="Player" type="Player"]
+[node name="Player" type="Player" groups=["player_group"]]
 head = NodePath("Head")
 hand = NodePath("Head/Camera3D/Hand")
 collision_layer = 3

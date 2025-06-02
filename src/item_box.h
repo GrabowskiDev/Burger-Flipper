@@ -13,10 +13,12 @@ namespace godot {
 
     private:
         Ref<PackedScene> item_scene;
+        Player *player_in_box = nullptr;
 
     protected:
         static void _bind_methods();
         void _on_body_entered_item_box(Node *body);
+        void _on_body_exited_item_box(Node *body);
 
     public:
         ItemBox();

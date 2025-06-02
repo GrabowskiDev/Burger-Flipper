@@ -85,7 +85,7 @@ blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_7q864")
 
 [node name="Burger Top" type="BurgerPart"]
-height = 0.15
+height = 0.227
 name = "top_bun"
 transform = Transform3D(100, 0, 0, 0, 0, 20, 0, -100, 0, 0, 0, 0)
 mesh = SubResource("ArrayMesh_g68vc")
