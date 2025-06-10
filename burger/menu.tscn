@@ -1,9 +1,8 @@
-[gd_scene load_steps=17 format=3 uid="uid://chjaf6q2vhjm4"]
+[gd_scene load_steps=19 format=3 uid="uid://chjaf6q2vhjm4"]
 
 [ext_resource type="Texture2D" uid="uid://m3hb1l4xfeav" path="res://assets/textures/wood_floor_diff_1k.png" id="1_nrnbx"]
 [ext_resource type="Texture2D" uid="uid://bvey7gm218jol" path="res://assets/textures/wood_floor_nor_gl_1k.png" id="2_iqepy"]
 [ext_resource type="Texture2D" uid="uid://dtk3yejccybar" path="res://assets/textures/wood_floor_rough_1k.png" id="3_h1wq0"]
-[ext_resource type="PackedScene" uid="uid://bmpp28cm2pncb" path="res://item_counter.tscn" id="4_dwrpx"]
 [ext_resource type="PackedScene" uid="uid://dyy1jiyal552d" path="res://assets/burger_parts/burger_bottom.tscn" id="5_g7jxm"]
 [ext_resource type="PackedScene" uid="uid://77xfd7hgtwgc" path="res://assets/burger_parts/lettuce.tscn" id="6_jspdm"]
 [ext_resource type="PackedScene" uid="uid://mewgyriwgaql" path="res://assets/burger_parts/meat.tscn" id="7_oxnod"]
@@ -13,15 +12,16 @@
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_3ls4m"]
 sky_top_color = Color(0.404405, 0.632148, 0.837028, 1)
 sky_horizon_color = Color(0.900901, 0.571865, 0, 1)
-ground_bottom_color = Color(0.509712, 0.549588, 0.519687, 1)
+ground_bottom_color = Color(0.114058, 0, 0.995401, 1)
 ground_horizon_color = Color(0.567923, 0.578037, 0.594006, 1)
 
-[sub_resource type="Sky" id="Sky_efxa6"]
+[sub_resource type="Sky" id="Sky_kk3ma"]
 sky_material = SubResource("ProceduralSkyMaterial_3ls4m")
 
 [sub_resource type="Environment" id="Environment_5h80m"]
 background_mode = 2
-sky = SubResource("Sky_efxa6")
+sky = SubResource("Sky_kk3ma")
+fog_sun_scatter = 1.05
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_w25hu"]
 size = Vector3(20, 1, 20)
@@ -40,6 +40,17 @@ center_offset = Vector3(0, 0.5, 0)
 
 [sub_resource type="LabelSettings" id="LabelSettings_nrnbx"]
 font_size = 64
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_kk3ma"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_kk3ma"]
+albedo_texture = ExtResource("1_nrnbx")
+roughness_texture = ExtResource("3_h1wq0")
+normal_enabled = true
+normal_texture = ExtResource("2_iqepy")
+
+[sub_resource type="BoxMesh" id="BoxMesh_iqepy"]
+material = SubResource("StandardMaterial3D_kk3ma")
 
 [node name="Menu" type="MainMenu"]
 start_button_path = NodePath("SubViewportContainer/GridContainer/Button")
@@ -66,26 +77,6 @@ shape = SubResource("BoxShape3D_w25hu")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Ground"]
 mesh = SubResource("PlaneMesh_td6mg")
-
-[node name="ItemCounter" parent="." instance=ExtResource("4_dwrpx")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
-
-[node name="Node3D" type="Node3D" parent="ItemCounter"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.522523, 0)
-
-[node name="Burger Bottom" parent="ItemCounter/Node3D" instance=ExtResource("5_g7jxm")]
-
-[node name="Lettuce" parent="ItemCounter/Node3D" instance=ExtResource("6_jspdm")]
-transform = Transform3D(100, 0, 0, 0, 0, 20, 0, -100, 0, 0, 0.116671, 0)
-
-[node name="Meat" parent="ItemCounter/Node3D" instance=ExtResource("7_oxnod")]
-transform = Transform3D(100, 0, 0, 0, 0, 20, 0, -100, 0, 0, 0.18896, 0)
-
-[node name="Tomato" parent="ItemCounter/Node3D" instance=ExtResource("8_gd0jp")]
-transform = Transform3D(100, 0, 0, 0, 0, 20, 0, -100, 0, 0, 0.250305, 0)
-
-[node name="Burger Top" parent="ItemCounter/Node3D" instance=ExtResource("9_4ndjb")]
-transform = Transform3D(100, 0, 0, 0, 0, 20, 0, -100, 0, 0, 0.372263, 0)
 
 [node name="SubViewportContainer" type="SubViewportContainer" parent="."]
 offset_right = 1920.0
@@ -134,3 +125,30 @@ layout_mode = 2
 layout_mode = 2
 theme_override_font_sizes/font_size = 64
 text = "Start!"
+
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+shape = SubResource("BoxShape3D_kk3ma")
+debug_color = Color(0.47589, 0.439406, 1, 0.42)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D"]
+mesh = SubResource("BoxMesh_iqepy")
+
+[node name="Node3D" type="Node3D" parent="StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+
+[node name="Burger Bottom" parent="StaticBody3D/Node3D" instance=ExtResource("5_g7jxm")]
+
+[node name="Lettuce" parent="StaticBody3D/Node3D" instance=ExtResource("6_jspdm")]
+transform = Transform3D(100, 0, 0, 0, 0, 20, 0, -100, 0, 0, 0.116671, 0)
+
+[node name="Meat" parent="StaticBody3D/Node3D" instance=ExtResource("7_oxnod")]
+transform = Transform3D(100, 0, 0, 0, 0, 20, 0, -100, 0, 0, 0.18896, 0)
+
+[node name="Tomato" parent="StaticBody3D/Node3D" instance=ExtResource("8_gd0jp")]
+transform = Transform3D(100, 0, 0, 0, 0, 20, 0, -100, 0, 0, 0.250305, 0)
+
+[node name="Burger Top" parent="StaticBody3D/Node3D" instance=ExtResource("9_4ndjb")]
+transform = Transform3D(100, 0, 0, 0, 0, 20, 0, -100, 0, 0, 0.372263, 0)
