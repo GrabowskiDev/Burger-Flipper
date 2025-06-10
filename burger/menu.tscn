@@ -1,0 +1,136 @@
+[gd_scene load_steps=17 format=3 uid="uid://chjaf6q2vhjm4"]
+
+[ext_resource type="Texture2D" uid="uid://m3hb1l4xfeav" path="res://assets/textures/wood_floor_diff_1k.png" id="1_nrnbx"]
+[ext_resource type="Texture2D" uid="uid://bvey7gm218jol" path="res://assets/textures/wood_floor_nor_gl_1k.png" id="2_iqepy"]
+[ext_resource type="Texture2D" uid="uid://dtk3yejccybar" path="res://assets/textures/wood_floor_rough_1k.png" id="3_h1wq0"]
+[ext_resource type="PackedScene" uid="uid://bmpp28cm2pncb" path="res://item_counter.tscn" id="4_dwrpx"]
+[ext_resource type="PackedScene" uid="uid://dyy1jiyal552d" path="res://assets/burger_parts/burger_bottom.tscn" id="5_g7jxm"]
+[ext_resource type="PackedScene" uid="uid://77xfd7hgtwgc" path="res://assets/burger_parts/lettuce.tscn" id="6_jspdm"]
+[ext_resource type="PackedScene" uid="uid://mewgyriwgaql" path="res://assets/burger_parts/meat.tscn" id="7_oxnod"]
+[ext_resource type="PackedScene" uid="uid://bgdpvcw71q42e" path="res://assets/burger_parts/tomato.tscn" id="8_gd0jp"]
+[ext_resource type="PackedScene" uid="uid://dgrbtyalf3nf1" path="res://assets/burger_parts/burger_top.tscn" id="9_4ndjb"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_3ls4m"]
+sky_top_color = Color(0.404405, 0.632148, 0.837028, 1)
+sky_horizon_color = Color(0.900901, 0.571865, 0, 1)
+ground_bottom_color = Color(0.509712, 0.549588, 0.519687, 1)
+ground_horizon_color = Color(0.567923, 0.578037, 0.594006, 1)
+
+[sub_resource type="Sky" id="Sky_efxa6"]
+sky_material = SubResource("ProceduralSkyMaterial_3ls4m")
+
+[sub_resource type="Environment" id="Environment_5h80m"]
+background_mode = 2
+sky = SubResource("Sky_efxa6")
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_w25hu"]
+size = Vector3(20, 1, 20)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_7mycd"]
+albedo_texture = ExtResource("1_nrnbx")
+roughness_texture = ExtResource("3_h1wq0")
+normal_enabled = true
+normal_texture = ExtResource("2_iqepy")
+uv1_scale = Vector3(4, 4, 4)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_td6mg"]
+material = SubResource("StandardMaterial3D_7mycd")
+size = Vector2(20, 20)
+center_offset = Vector3(0, 0.5, 0)
+
+[sub_resource type="LabelSettings" id="LabelSettings_nrnbx"]
+font_size = 64
+
+[node name="Menu" type="MainMenu"]
+start_button_path = NodePath("SubViewportContainer/GridContainer/Button")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_5h80m")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="WorldEnvironment"]
+transform = Transform3D(1, 0, 0, 0, -0.996682, 0.0813996, 0, -0.0813996, -0.996682, -12.745, 12.7747, 0.714884)
+shadow_enabled = true
+shadow_opacity = 0.85
+directional_shadow_mode = 1
+
+[node name="Ground" type="StaticBody3D" parent="."]
+axis_lock_linear_x = true
+axis_lock_linear_y = true
+axis_lock_linear_z = true
+axis_lock_angular_x = true
+axis_lock_angular_y = true
+axis_lock_angular_z = true
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ground"]
+shape = SubResource("BoxShape3D_w25hu")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Ground"]
+mesh = SubResource("PlaneMesh_td6mg")
+
+[node name="ItemCounter" parent="." instance=ExtResource("4_dwrpx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+
+[node name="Node3D" type="Node3D" parent="ItemCounter"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.522523, 0)
+
+[node name="Burger Bottom" parent="ItemCounter/Node3D" instance=ExtResource("5_g7jxm")]
+
+[node name="Lettuce" parent="ItemCounter/Node3D" instance=ExtResource("6_jspdm")]
+transform = Transform3D(100, 0, 0, 0, 0, 20, 0, -100, 0, 0, 0.116671, 0)
+
+[node name="Meat" parent="ItemCounter/Node3D" instance=ExtResource("7_oxnod")]
+transform = Transform3D(100, 0, 0, 0, 0, 20, 0, -100, 0, 0, 0.18896, 0)
+
+[node name="Tomato" parent="ItemCounter/Node3D" instance=ExtResource("8_gd0jp")]
+transform = Transform3D(100, 0, 0, 0, 0, 20, 0, -100, 0, 0, 0.250305, 0)
+
+[node name="Burger Top" parent="ItemCounter/Node3D" instance=ExtResource("9_4ndjb")]
+transform = Transform3D(100, 0, 0, 0, 0, 20, 0, -100, 0, 0, 0.372263, 0)
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="."]
+offset_right = 1920.0
+offset_bottom = 1080.0
+
+[node name="SubViewport" type="SubViewport" parent="SubViewportContainer"]
+handle_input_locally = false
+size = Vector2i(1920, 1080)
+render_target_update_mode = 4
+
+[node name="Camera3D" type="Camera3D" parent="SubViewportContainer/SubViewport"]
+transform = Transform3D(0.984799, 0, 0.1737, 0, 1, 0, -0.1737, 0, 0.984799, 1.67271, 1.40308, 1.9189)
+current = true
+
+[node name="GridContainer" type="GridContainer" parent="SubViewportContainer"]
+layout_mode = 2
+theme_override_constants/h_separation = 1200
+theme_override_constants/v_separation = 300
+columns = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="SubViewportContainer/GridContainer"]
+layout_mode = 2
+
+[node name="MarginContainer2" type="MarginContainer" parent="SubViewportContainer/GridContainer"]
+layout_mode = 2
+
+[node name="MarginContainer3" type="MarginContainer" parent="SubViewportContainer/GridContainer"]
+layout_mode = 2
+
+[node name="MarginContainer4" type="MarginContainer" parent="SubViewportContainer/GridContainer"]
+layout_mode = 2
+
+[node name="PanelContainer" type="PanelContainer" parent="SubViewportContainer/GridContainer/MarginContainer4"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="SubViewportContainer/GridContainer/MarginContainer4/PanelContainer"]
+layout_mode = 2
+text = "Burger Flipper
+"
+label_settings = SubResource("LabelSettings_nrnbx")
+
+[node name="MarginContainer5" type="MarginContainer" parent="SubViewportContainer/GridContainer"]
+layout_mode = 2
+
+[node name="Button" type="Button" parent="SubViewportContainer/GridContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 64
+text = "Start!"

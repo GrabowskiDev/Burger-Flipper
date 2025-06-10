@@ -5,6 +5,7 @@
 #include "item_box.h"
 #include "burger_part.h"
 #include "burger.h"
+#include "main_menu.h"
 
 #include <gdextension_interface.h>
 #include <godot_cpp/core/defs.hpp>
@@ -22,6 +23,7 @@ void initialize_example_module(ModuleInitializationLevel p_level) {
     GDREGISTER_RUNTIME_CLASS(ItemBox);
     GDREGISTER_RUNTIME_CLASS(BurgerPart);
     GDREGISTER_RUNTIME_CLASS(Burger);
+    GDREGISTER_RUNTIME_CLASS(MainMenu);
 }
 
 void uninitialize_example_module(ModuleInitializationLevel p_level) {

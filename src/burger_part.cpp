@@ -23,7 +23,9 @@ void BurgerPart::_bind_methods() {
     ADD_PROPERTY(PropertyInfo(Variant::STRING, "name"), "set_name", "get_name");
 }
 
-BurgerPart::BurgerPart() {}
+BurgerPart::BurgerPart() {
+    price = 0;
+}
 
 BurgerPart::~BurgerPart() {}
 

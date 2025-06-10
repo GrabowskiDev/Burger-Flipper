@@ -4,6 +4,7 @@
 #include <godot_cpp/classes/resource_loader.hpp>
 #include <godot_cpp/classes/input_event_mouse_motion.hpp>
 #include <godot_cpp/classes/packed_scene.hpp>
+#include <godot_cpp/classes/scene_tree.hpp>
 
 
 using namespace godot;
@@ -54,6 +55,10 @@ void Player::_process(double delta) {
     set_velocity(new_velocity);
 
     move_and_slide();
+
+    if (Input::get_singleton()->is_action_just_pressed("exit")) {
+        get_tree()->quit();
+    }
 }
 
 void Player::_ready() {
