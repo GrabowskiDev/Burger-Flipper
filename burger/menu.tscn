@@ -39,6 +39,7 @@ size = Vector2(20, 20)
 center_offset = Vector3(0, 0.5, 0)
 
 [sub_resource type="LabelSettings" id="LabelSettings_nrnbx"]
+line_spacing = 0.0
 font_size = 64
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_kk3ma"]
@@ -53,7 +54,8 @@ normal_texture = ExtResource("2_iqepy")
 material = SubResource("StandardMaterial3D_kk3ma")
 
 [node name="Menu" type="MainMenu"]
-start_button_path = NodePath("SubViewportContainer/GridContainer/Button")
+start_button_path = NodePath("SubViewportContainer/SubViewport/StartButton")
+quit_button_path = NodePath("SubViewportContainer/SubViewport/QuitButton")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_5h80m")
@@ -91,40 +93,35 @@ render_target_update_mode = 4
 transform = Transform3D(0.984799, 0, 0.1737, 0, 1, 0, -0.1737, 0, 0.984799, 1.67271, 1.40308, 1.9189)
 current = true
 
-[node name="GridContainer" type="GridContainer" parent="SubViewportContainer"]
-layout_mode = 2
-theme_override_constants/h_separation = 1200
-theme_override_constants/v_separation = 300
-columns = 2
+[node name="StartButton" type="Button" parent="SubViewportContainer/SubViewport"]
+offset_left = 1490.0
+offset_top = 616.0
+offset_right = 1666.0
+offset_bottom = 712.0
+theme_override_font_sizes/font_size = 64
+text = "Start!"
 
-[node name="MarginContainer" type="MarginContainer" parent="SubViewportContainer/GridContainer"]
-layout_mode = 2
+[node name="QuitButton" type="Button" parent="SubViewportContainer/SubViewport"]
+offset_left = 1494.0
+offset_top = 758.0
+offset_right = 1670.0
+offset_bottom = 854.0
+theme_override_font_sizes/font_size = 64
+text = "Quit!"
 
-[node name="MarginContainer2" type="MarginContainer" parent="SubViewportContainer/GridContainer"]
-layout_mode = 2
+[node name="PanelContainer" type="PanelContainer" parent="SubViewportContainer/SubViewport"]
+offset_left = 1356.0
+offset_top = 177.0
+offset_right = 1798.0
+offset_bottom = 353.0
 
-[node name="MarginContainer3" type="MarginContainer" parent="SubViewportContainer/GridContainer"]
-layout_mode = 2
-
-[node name="MarginContainer4" type="MarginContainer" parent="SubViewportContainer/GridContainer"]
-layout_mode = 2
-
-[node name="PanelContainer" type="PanelContainer" parent="SubViewportContainer/GridContainer/MarginContainer4"]
-layout_mode = 2
-
-[node name="Label" type="Label" parent="SubViewportContainer/GridContainer/MarginContainer4/PanelContainer"]
+[node name="Label" type="Label" parent="SubViewportContainer/SubViewport/PanelContainer"]
 layout_mode = 2
 text = "Burger Flipper
 "
 label_settings = SubResource("LabelSettings_nrnbx")
-
-[node name="MarginContainer5" type="MarginContainer" parent="SubViewportContainer/GridContainer"]
-layout_mode = 2
-
-[node name="Button" type="Button" parent="SubViewportContainer/GridContainer"]
-layout_mode = 2
-theme_override_font_sizes/font_size = 64
-text = "Start!"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="StaticBody3D" type="StaticBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)

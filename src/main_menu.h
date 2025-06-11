@@ -14,6 +14,7 @@ namespace godot {
 
     private:
         NodePath start_button_path;
+        NodePath quit_button_path;
 
     protected:
         static void _bind_methods();
@@ -24,9 +25,13 @@ namespace godot {
 
         void _ready() override;
         void _on_start_button_pressed();
+        void _on_quit_button_pressed();
 
         void set_start_button_path(NodePath p_path);
         NodePath get_start_button_path() const;
+
+        void set_quit_button_path(NodePath p_path);
+        NodePath get_quit_button_path() const;
     };
 
 }
