@@ -28,3 +28,14 @@ cd godot-cpp
 scons platform=<platform> custom_api_file=<PATH_TO_EXTENSION_API_FILE>
 cd ..
 ```
+
+## Building the game  
+To compile a project into a gdextension and then launch it in godot editor:
+```
+scons platform=<platform>
+```
+And to build gdextension for exporting the game into a binary:
+```
+scons target=template_release platform=<platform>
+```
+and then export the game from the godot editor.
