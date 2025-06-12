@@ -6,6 +6,17 @@ The source code is located in the `src/` directory and is organized into classes
 
 The project uses the `godot-cpp` submodule to generate API bindings and SCons as the build system. After building, the `.so` library is loaded by Godot as a GDExtension. The entire build and integration process is described in the sections below.
 
+## Playing the game
+Use **WASD** to move the character. Move the camera with **mouse**. After getting close to the box with burger ingredients, click **E** to interact and to pick up this burger ingredient. To place that burger ingredient on wooden box, get close to the wooden box and click **E** to place that part. Each burger consists of bottom bun and top bun, with as much ingredients as player wants!
+
+## Custom nodes/classes
+- `player.cpp` / `player.h`: Implements the player character, including movement, input handling, object pickup, and camera/head rotation logic.
+- `item_box.cpp` / `item_box.h`: Represents a box that gives the player a burger part when interacted with. Handles player detection and item spawning.
+- `burger_part.cpp` / `burger_part.h`: Defines a single burger ingredient, with properties like height, price, and name. Used for stacking in the burger.
+- `burger.cpp` / `burger.h`: Manages the burger assembly process, stacking parts, checking for correct order, and handling player interactions.
+- `main_menu.cpp` / `main_menu.h`: Controls the main menu UI, including starting the game and quitting the application.
+- `register_types.cpp` / `register_types.h`: Registers all C++ classes as Godot nodes, making them available in the Godot editor.
+
 ## Cloning
 To clone the project, you must also clone the godot-cpp submodule
 ```
